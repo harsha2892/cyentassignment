@@ -4,6 +4,8 @@ pipeline {
         maven 'M3' 
     }
     options {
+        timestamps
+        disableConcurrentBuilds abortPrevious: true
         buildDiscarder logRotator( 
             daysToKeepStr: '2', 
             numToKeepStr: '2'
