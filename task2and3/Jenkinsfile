@@ -32,8 +32,9 @@ pipeline {
         }
         stage('Checkout SCM'){
             steps {
-                git url: 'https://github.com/harsha19932893/demo.git',
+                git url: 'https://github.com/harsha2892/cyentassignment.git',
                 branch: 'main'
+                
             }
         }
         stage('Code Build') {
