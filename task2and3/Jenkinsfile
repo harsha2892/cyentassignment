@@ -4,7 +4,7 @@ pipeline {
         maven 'M3' 
     }
     options {
-        timestamps
+        timestamps()
         disableConcurrentBuilds abortPrevious: true
         buildDiscarder logRotator( 
             daysToKeepStr: '2', 
@@ -35,13 +35,12 @@ pipeline {
                 git url: 'https://github.com/harsha2892/cyentassignment.git',
                 branch: 'main'
             }
-             options {
-                checkoutToSubdirectory '/cyentassignment/task2and3'
-            }
         }
         stage('Code Build') {
             steps {
-                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                dir('task2and3') {
+                    sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                }    
             }
             post {
                 success {
@@ -51,24 +50,30 @@ pipeline {
         }
         stage('Build Docker Image'){
             steps {
-                script{
-                    docker_image = docker.build "${IMAGE_NAME}"
+                dir('task2and3') {
+                    script{
+                        docker_image = docker.build "${IMAGE_NAME}"
+                    }
                 }
             }
         }
         stage('Push Docker Image'){
             steps {
-                script{
-                    docker.withRegistry('', REGISTRY_CREDS ){
-                        docker_image.push("${BUILD_NUMBER}")
-                        docker_image.push('latest')
+                dir('task2and3') {
+                    script{
+                        docker.withRegistry('', REGISTRY_CREDS ){
+                            docker_image.push("${BUILD_NUMBER}")
+                            docker_image.push('latest')
+                        }
                     }
                 }
             }
         }
          stage('Deploy to Minikube'){
             steps {
-                sh 'envsubst < ${WORKSPACE}/deployment.yml | kubectl apply -f -'
+                dir('task2and3') {
+                    sh 'envsubst < deployment.yml | kubectl apply -f -'
+                }    
             }
         }  
         stage('Start Minikube') {
