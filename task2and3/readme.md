@@ -1,6 +1,6 @@
 # Spring PetClinic Sample Application [![Build Status](https://github.com/spring-projects/spring-petclinic/actions/workflows/maven-build.yml/badge.svg)](https://github.com/spring-projects/spring-petclinic/actions/workflows/maven-build.yml)
-
-[![CI/CD Status](http://52.91.159.1:8080/job/cyentassignment/lastBuild/)]
+## Jenkins Build Status
+[![Build Status](http://52.91.159.1:8080/buildStatus/icon?job=cyentassignment)](http://52.91.159.1:8080/job/cyentassignment/)
 ## Understanding the Spring Petclinic application with a few diagrams
 <a href="https://speakerdeck.com/michaelisvy/spring-petclinic-sample-application">See the presentation here</a>
 
